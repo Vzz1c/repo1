@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+<!--    &lt;!&ndash;开启注解扫描&ndash;&gt;
+    <context:component-scan base-package="com.itheima">
+        &lt;!&ndash;指定Controller注解不扫描&ndash;&gt;
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>
+    </context:component-scan>
+
+    &lt;!&ndash;配置声明式事物控制&ndash;&gt;
+    &lt;!&ndash;
+        1. 配置事物管理器
+        2. 配置事物通知
+        3. 配置AOP
+            * 配置切入点表达式
+            * 配置事物通知和切入点表达式结合
+        4. 配置事物属性
+    &ndash;&gt;
+    &lt;!&ndash;1. 配置事物管理器&ndash;&gt;
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    &lt;!&ndash;2. 配置事物通知&ndash;&gt;
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"></tx:method>
+        </tx:attributes>
+    </tx:advice>
+
+    &lt;!&ndash;3. 配置AOP&ndash;&gt;
+    <aop:config>
+        &lt;!&ndash;配置切入点表达式&ndash;&gt;
+        <aop:pointcut id="txPointcut" expression="execution(* com.itheima.service.impl.*.*(..))"></aop:pointcut>
+        &lt;!&ndash;配置事物通知和切入点表达式结合&ndash;&gt;
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"></aop:advisor>
+    </aop:config>
+
+
+    &lt;!&ndash;引入数据访问层配置文件&ndash;&gt;
+    <import resource="classpath:applicationConfig-dao.xml"></import>-->
+
+    <context:component-scan base-package="com.itheima">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>
+    </context:component-scan>
+    <!--事物管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--配置通知-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" read-only="false" propagation="REQUIRED"/>
+            <tx:method name="find*" read-only="true" propagation="SUPPORTS"></tx:method>
+        </tx:attributes>
+    </tx:advice>
+    <!--配置aop-->
+    <aop:config>
+        <aop:pointcut id="txPointcut" expression="execution(* com.itheima.service.impl.*.*(..))"></aop:pointcut>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"></aop:advisor>
+    </aop:config>
+
+
+    <aop:config>
+        <aop:pointcut id="loginPointcue" expression="execution(* com.itheima.service.impl.UserServiceImpl.login(..))"></aop:pointcut>
+        <aop:aspect id="LogAspect" ref="logAspect">
+            <aop:after-returning method="logAspect" pointcut-ref="loginPointcue" returning="user"></aop:after-returning>
+        </aop:aspect>
+    </aop:config>
+    <import resource="classpath:applicationConfig-dao.xml"></import>
+
+
+<!--    <context:component-scan base-package="com.itheima">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>
+    </context:component-scan>
+    &lt;!&ndash;配置事物管理器&ndash;&gt;
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    &lt;!&ndash;配置事物通知&ndash;&gt;
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" read-only="false" propagation="REQUIRED"/>
+            <tx:method name="find*" read-only="true" propagation="SUPPORTS"></tx:method>
+        </tx:attributes>
+    </tx:advice>
+    &lt;!&ndash;配置AOP&ndash;&gt;
+    <aop:config>
+        <aop:pointcut id="loginPoint" expression="execution(* com.itheima.service.impl.*.*(..))"></aop:pointcut>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="loginPoint"></aop:advisor>
+    </aop:config>
+    <import resource="classpath:applicationConfig-dao.xml"></import>
+
+    <aop:config>
+        <aop:pointcut id="loginPointcue" expression="execution(* com.itheima.service.impl.UserServiceImpl.login(..))"></aop:pointcut>
+        <aop:aspect id="LogAspect" ref="logAspect">
+            <aop:after-returning method="logAspect" pointcut-ref="loginPointcue" returning="user"></aop:after-returning>
+        </aop:aspect>
+    </aop:config>-->
+</beans>

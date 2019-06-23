@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+<!--
+    &lt;!&ndash;开启注解扫描&ndash;&gt;
+    <context:component-scan base-package="com.itheima.web"></context:component-scan>
+
+    &lt;!&ndash;配置SpringMVC&ndash;&gt;
+
+    &lt;!&ndash;配置视图解析器&ndash;&gt;
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+    &lt;!&ndash;配置SpringMVC注解支持&ndash;&gt;
+    <mvc:annotation-driven></mvc:annotation-driven>
+    &lt;!&ndash;释放静态资源&ndash;&gt;
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+-->
+<!--
+
+    <context:component-scan base-package="com.itheima.web"></context:component-scan>
+    &lt;!&ndash;或者&ndash;&gt;
+    &lt;!&ndash;<context:component-scan base-package="com.itheima">&ndash;&gt;
+        &lt;!&ndash;<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:include-filter>&ndash;&gt;
+    &lt;!&ndash;</context:component-scan>&ndash;&gt;
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+    <mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/user/*"/>
+            <mvc:exclude-mapping path="/user/login"></mvc:exclude-mapping>
+            <bean id="authorityInterceptor" class="com.itheima.interceptor.AuthorityInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+-->
+
+
+
+    <context:component-scan base-package="com.itheima.web"></context:component-scan>
+
+<!--
+    <context:component-scan base-package="com.itheima.web">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:include-filter>
+    </context:component-scan>
+-->
+
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"></property>
+        <property name="suffix" value=".jsp"></property>
+     </bean>
+
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+    <!--释放静态资源-->
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+
+    <!--配置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/user/*"/>
+            <mvc:exclude-mapping path="/user/login"></mvc:exclude-mapping>
+            <bean id="authorityInterceptor" class="com.itheima.interceptor.AuthorityInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+<!--
+    <context:property-placeholder location="classpath:druid.properties"></context:property-placeholder>
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <bean id="configuration" class="org.apache.ibatis.session.Configuration">
+        <property name="lazyLoadingEnabled" value="true"></property>
+        <property name="aggressiveLazyLoading" value="false"></property>
+        <property name="cacheEnabled" value="true"></property>
+    </bean>
+
+    &lt;!&ndash;配置Spring整合Mybatis&ndash;&gt;
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        &lt;!&ndash;注入连接池&ndash;&gt;
+        <property name="dataSource" ref="dataSource"></property>
+        &lt;!&ndash;配置mybatis扫描的包&ndash;&gt;
+        <property name="typeAliasesPackage" value="com.itheima.bean"></property>
+        &lt;!&ndash;配置全局属性&ndash;&gt;
+        <property name="configuration" ref="configuration"></property>
+    </bean>
+
+    &lt;!&ndash;配置扫描映射文件&ndash;&gt;
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.itheima.dao"></property>
+    </bean>
+-->
+
+
+    <!--<context:property-placeholder location="classpath:druid.properties"></context:property-placeholder>-->
+    <!--<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">-->
+        <!--<property name="driverClassName" value="${jdbc.driverClassName}"></property>-->
+        <!--<property name="url" value="${jdbc.url}"></property>-->
+        <!--<property name="username" value="${jdbc.username}"></property>-->
+        <!--<property name="password" value="${jdbc.password}"></property>-->
+    <!--</bean>-->
+    <!--<bean id="configuration" class="org.apache.ibatis.session.Configuration">-->
+        <!--<property name="lazyLoadingEnabled" value="true"></property>-->
+        <!--<property name="aggressiveLazyLoading" value="false"></property>-->
+        <!--<property name="cacheEnabled" value="false"></property>-->
+    <!--</bean>-->
+    <!--<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
+        <!--<property name="dataSource" ref="dataSource"></property>-->
+        <!--<property name="typeAliasesPackage" value="com.itheima.bean"></property>-->
+        <!--<property name="configuration" ref="configuration"></property>-->
+        <!--&lt;!&ndash;<property name="mapperLocations" value="classpath:com/itheima/dao/*.xml"></property>&ndash;&gt;-->
+    <!--</bean>-->
+    <!--<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+        <!--<property name="basePackage" value="com.itheima.dao"></property>-->
+    <!--</bean>-->
+
+
+    <context:property-placeholder location="classpath:druid.properties"></context:property-placeholder>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+    <bean id="configuration" class="org.apache.ibatis.session.Configuration">
+        <property name="cacheEnabled" value="true"></property>
+        <property name="lazyLoadingEnabled" value="true"></property>
+        <property name="aggressiveLazyLoading" value="false"></property>
+    </bean>
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="mapperLocations" value="classpath:com/itheima/dao/*.xml"></property>
+        <property name="typeAliasesPackage" value="com.itheima.bean"></property>
+        <property name="configuration" ref="configuration"></property>
+    </bean>
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.itheima.dao"></property>
+    </bean>
+
+</beans>
