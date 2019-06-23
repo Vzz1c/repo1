@@ -27,6 +27,7 @@
             text-align: center;
         }
     </style>
+    <%--注释--%>
     <script>
         function delSelected() {
             var flag=false;
